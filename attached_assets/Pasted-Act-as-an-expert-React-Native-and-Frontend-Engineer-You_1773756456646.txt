@@ -1,0 +1,65 @@
+Act as an expert React Native and Frontend Engineer. Your task is to build a premium, launch-ready MVP for a Gym Membership Management dashboard app. I have provided an image and an HTML design as visual and structural references. Please translate these designs into a fully functional, highly optimized mobile application.
+
+Core Requirements & Tech Stack:
+
+Framework: React Native (using Expo) with TypeScript for strict type safety.
+
+Backend & BaaS: Firebase (Firestore for database, Firebase Auth for authentication).
+
+State Management: * React Query (TanStack Query): For all asynchronous server state, data fetching from Firebase, caching, and optimistic updates.
+
+Zustand: For synchronous, global UI state management (e.g., user preferences, theme).
+
+Styling: Unistyles for cross-platform, high-performance styling that perfectly matches the premium look of the provided design.
+
+Forms & Validation: Formik coupled with Yup for robust, heavily validated data entry (adding members, logging payments).
+
+Performance: Use @shopify/flash-list for all scrollable lists to ensure peak memory efficiency and 60 FPS scrolling, especially for the member directory.
+
+Animations: Implement smooth, professional animations (using React Native Reanimated or Layout Animations) for screen transitions, modal presentations, and interactive elements.
+
+Required Screens & Features:
+
+1. Dashboard (The Hub)
+
+Overview Metrics: Total active members, total revenue this month, new sign-ups.
+
+Expiring Soon Highlight (Crucial): A prominently displayed alert section dynamically showing members whose memberships are ending within the next 7 days.
+
+Quick Actions: Floating Action Button (FAB) or quick links to "Add Member" or "Log Payment".
+
+2. All Gym Members Screen
+
+A searchable and filterable directory of all gym members.
+
+Must utilize @shopify/flash-list for peak performance.
+
+Each list item should display the member's avatar, name, membership tier, and status (Active, Expiring, Expired) with smooth micro-interactions on press.
+
+3. Member Detail Screen
+
+Comprehensive view of a specific member.
+
+Data Points: Personal info, join date, current membership plan, attendance history, and a detailed log of past payments.
+
+Actions: Edit profile, renew membership, delete member. Formik/Yup should be used for the edit/renew modals.
+
+4. Income Details Screen
+
+A financial overview displaying payment logs.
+
+Include a categorized list of recent transactions.
+
+Use premium UI components to visualize revenue trends (if applicable from the provided HTML/Image).
+
+Implementation Guidelines:
+
+Pixel-Perfect UI: Closely analyze the attached image and HTML files. Replicate the layout, typography, color palette, and premium feel using Unistyles.
+
+Component Architecture: Create modular, reusable components (e.g., CustomButton, StatCard, MemberListItem).
+
+Data Hook Pattern: Abstract all Firebase/React Query logic into custom hooks (e.g., useGetMembers, useExpiringMemberships).
+
+MVP Scope: Focus on stability, flawless UI/UX, and core functionality. It must be production-ready and bug-free for launch.
+
+Please begin by outlining your proposed folder structure and the Firestore database schema before writing the code for the main Dashboard screen.
