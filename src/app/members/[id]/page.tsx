@@ -209,14 +209,14 @@ export default function MemberDetailPage() {
                   <label className="block text-xs text-white/40 tracking-wider mb-1.5 capitalize">{field}</label>
                   <input
                     value={editData[field]}
-                    onChange={(e) => setEditData((d: any) => ({ ...d, [field]: e.target.value }))}
+                    onChange={(e) => setEditData((d) => ({ ...d, [field]: e.target.value }))}
                     className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#c8f65d]/50 transition-colors"
                   />
                 </div>
               ))}
               <div>
                 <label className="block text-xs text-white/40 uppercase tracking-wider mb-1.5">Plan</label>
-                <select value={editData.plan} onChange={(e) => setEditData((d: any) => ({ ...d, plan: e.target.value as any }))} className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#c8f65d]/50 transition-colors">
+                <select value={editData.plan} onChange={(e) => setEditData((d) => ({ ...d, plan: e.target.value as "Basic" | "Pro" | "Elite" }))} className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#c8f65d]/50 transition-colors">
                   {["Basic", "Pro", "Elite"].map((p) => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>

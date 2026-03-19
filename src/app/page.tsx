@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import AOS from "aos";
@@ -26,9 +26,17 @@ export default function DashboardPage() {
   const expiringMembers = useExpiringMembers();
   const { activities } = useActivities();
 
+  const [now, setNow] = useState<number | null>(null);
+  const [currentHour, setCurrentHour] = useState<number | null>(null);
+
   useEffect(() => {
     AOS.init({ duration: 500, once: true, offset: 50 });
     seedFirebaseData();
+    setNow(Date.now());
+    setCurrentHour(new Date().getHours());
+    
+    const timer = setInterval(() => setNow(Date.now()), 60000);
+    return () => clearInterval(timer);
   }, []);
 
   const activityIcon = (type: string) => {
@@ -41,7 +49,8 @@ export default function DashboardPage() {
   };
 
   const timeAgo = (ts: string) => {
-    const diff = Date.now() - new Date(ts).getTime();
+    if (!now) return "...";
+    const diff = now - new Date(ts).getTime();
     const mins = Math.floor(diff / 60000);
     const hrs = Math.floor(mins / 60);
     if (hrs > 0) return `${hrs}h ago`;
@@ -55,8 +64,9 @@ export default function DashboardPage() {
         <div>
           <p className="text-xs text-white/40 uppercase tracking-widest mb-1">Welcome Back</p>
           <h1 className="text-2xl font-bold text-white">
-            Good {new Date().getHours() < 12 ? "morning" : new Date().getHours() < 18 ? "afternoon" : "evening"}, Admin
+            Good {currentHour === null ? "..." : currentHour < 12 ? "morning" : currentHour < 18 ? "afternoon" : "evening"}, Admin
           </h1>
+ Broadway
         </div>
         <Link href="/members?add=true">
           <motion.button
@@ -146,8 +156,8 @@ export default function DashboardPage() {
                   transition={{ delay: i * 0.08 }}
                 >
                   <Link href={`/members/${member.id}`}>
-                    <div className="flex-shrink-0 w-44 bg-[#161616] border border-white/5 hover:border-orange-500/20 rounded-2xl p-4 text-center cursor-pointer transition-all group">
-                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border-2 border-orange-500/20 flex items-center justify-center text-xl font-bold text-orange-400 mx-auto mb-3 group-hover:border-orange-500/40 transition-colors">
+                    <div className="shrink-0 w-44 bg-[#161616] border border-white/5 hover:border-orange-500/20 rounded-2xl p-4 text-center cursor-pointer transition-all group">
+                      <div className="w-14 h-14 rounded-full bg-linear-to-br from-orange-500/20 to-orange-600/10 border-2 border-orange-500/20 flex items-center justify-center text-xl font-bold text-orange-400 mx-auto mb-3 group-hover:border-orange-500/40 transition-colors">
                         {member.name[0]}
                       </div>
                       <p className="text-sm font-semibold text-white truncate">{member.name}</p>
@@ -180,7 +190,7 @@ export default function DashboardPage() {
                   <p className="text-sm font-medium text-white">{activity.title}</p>
                   <p className="text-xs text-white/40 truncate">{activity.description}</p>
                 </div>
-                <div className="text-right flex-shrink-0">
+                <div className="text-right shrink-0">
                   {activity.amount ? (
                     <p className="text-sm font-semibold text-[#c8f65d]">+{formatCurrency(activity.amount)}</p>
                   ) : null}

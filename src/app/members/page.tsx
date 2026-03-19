@@ -25,9 +25,10 @@ function MembersContent() {
   useEffect(() => {
     AOS.init({ duration: 400, once: true });
     const f = searchParams.get("filter");
-    if (f && FILTERS.includes(f as any)) setActiveFilter(f as any);
+    if (f && (FILTERS as readonly string[]).includes(f)) setActiveFilter(f as typeof FILTERS[number]);
     
     if (searchParams.get("add") === "true") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowAdd(true);
     }
   }, [searchParams, setActiveFilter]);
@@ -101,7 +102,7 @@ function MembersContent() {
                   : "text-white/50 hover:text-white hover:bg-white/5"
               }`}
             >
-              {f} {(counts as any)[f]}
+              {f} {counts[f]}
             </button>
           ))}
         </div>
