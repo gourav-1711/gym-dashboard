@@ -7,8 +7,8 @@ import { useLogin } from "@/hooks/useAuth";
 import { Dumbbell, Eye, EyeOff, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("admin@gym.com");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("12345678");
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
