@@ -32,7 +32,9 @@ export default function DashboardPage() {
   useEffect(() => {
     AOS.init({ duration: 500, once: true, offset: 50 });
     seedFirebaseData();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(Date.now());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentHour(new Date().getHours());
     
     const timer = setInterval(() => setNow(Date.now()), 60000);
