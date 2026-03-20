@@ -56,7 +56,7 @@ export default function IncomePage() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setIsClient(true); // eslint-disable-line react-hooks/set-state-in-effect
     AOS.init({ duration: 500, once: true, offset: 30 });
   }, []);
 

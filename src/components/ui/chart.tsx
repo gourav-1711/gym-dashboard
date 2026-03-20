@@ -267,8 +267,7 @@ const ChartLegend = RechartsPrimitive.Legend
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      payload?: any[]
+      payload?: any[] // eslint-disable-line @typescript-eslint/no-explicit-any
       verticalAlign?: "top" | "bottom"
       hideIcon?: boolean
       nameKey?: string
