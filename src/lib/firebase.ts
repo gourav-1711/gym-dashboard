@@ -1,6 +1,6 @@
-import { initializeApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth, type Auth } from "firebase/auth";
+import { getDatabase, type Database } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
@@ -12,20 +12,15 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
 };
 
-const isBrowser = typeof window !== "undefined";
-
-// During build time (SSR/SSG), we might not have the correct Firebase keys.
-// We only initialize if we're in the browser AND keys are actually present.
-const app = (isBrowser && firebaseConfig.apiKey && firebaseConfig.apiKey.length > 10) 
-  ? (getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0])
+// Configuration...
+// (Using a helper to ensure it's not re-initialized too much)
+const app = (typeof window !== "undefined" && firebaseConfig.apiKey)
+  ? (getApps().length === 0 ? initializeApp(firebaseConfig) : getApp())
   : null;
 
-// export const auth = app ? getAuth(app) : null as any;
-// export const db = app ? getDatabase(app) : null as any;
+// These will be valid in the browser if keys are present
+// Otherwise they are null, which call sites must handle or use optional chaining
+export const auth = app ? getAuth(app) : null as unknown as Auth;
+export const db = app ? getDatabase(app) : null as unknown as Database;
 
-// Use lazy initialization or fallback to avoid build crashes
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const auth = (app && isBrowser) ? getAuth(app) : ({} as any);
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const db = (app) ? getDatabase(app) : ({} as any);
 export default app;

@@ -9,6 +9,10 @@ function useRealtimeQuery<T>(key: string[], path: string) {
     queryKey: key,
     queryFn: () =>
       new Promise<T>((resolve, reject) => {
+        if (!db) {
+          console.warn("Database not initialized");
+          return resolve(null as unknown as T);
+        }
         const dbRef = ref(db, path);
         onValue(dbRef, (snapshot) => {
           resolve(snapshot.val() as T);

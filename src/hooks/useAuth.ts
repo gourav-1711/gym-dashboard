@@ -6,6 +6,11 @@ import { useAuthStore } from "../store/authStore";
 export function useAuthInit() {
   const { setUser, setLoading } = useAuthStore();
   useEffect(() => {
+    if (!auth || typeof auth.onIdTokenChanged !== "function") {
+        console.warn("Auth instance not available");
+        setLoading(false);
+        return;
+    }
     const unsub = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
